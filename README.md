@@ -1,58 +1,119 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# Mini Project Proyek 3 - Pelaporan dan Pemantauan Keamanan Makanan MBG (Kasus A)
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+Aplikasi web berbasis Laravel untuk pelaporan, peninjauan, penerusan informasi, dan pemantauan kejadian terkait keamanan makanan Program Makan Bergizi Gratis (MBG).
 
-## About Laravel
+---
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+## 1. Identitas Mahasiswa
+* **Nama:** Alvin Dwi Saputra
+* **NIM:** 251511001
+* **Kelas:** D3 2A
+* **Judul Mini Project:** Pelaporan dan Pemantauan Keamanan Makanan MBG (Kasus A)
+* **URL Repository:** https://github.com/AlvinDsaputra/Proyek-3-ETS
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+---
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+## 2. Kebutuhan Environment
+* **PHP:** ^8.2
+* **Composer:** ^2.x
+* **Node.js & npm:** ^18.x / ^20.x
+* **Database:** MySQL / MariaDB
+* **Framework:** Laravel 11.x
 
-## Learning Laravel
+---
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+## 3. Langkah Instalasi
 
-In addition, [Laracasts](https://laracasts.com) contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+1. **Clone Repository:**
+   ```bash
+   git clone [https://github.com/AlvinDsaputra/Proyek-3-ETS.git](https://github.com/AlvinDsaputra/Proyek-3-ETS.git)
+   cd Proyek-3-ETS
+   ```
 
-You can also watch bite-sized lessons with real-world projects on [Laravel Learn](https://laravel.com/learn), where you will be guided through building a Laravel application from scratch while learning PHP fundamentals.
+2. **Install Dependensi PHP:**
+   ```bash
+   composer install
+   ```
 
-## Agentic Development
+3. **Install Dependensi JavaScript:**
+   ```bash
+   npm install && npm run build
+   ```
 
-Laravel's predictable structure and conventions make it ideal for AI coding agents like Claude Code, Cursor, and GitHub Copilot. Install [Laravel Boost](https://laravel.com/docs/ai) to supercharge your AI workflow:
+4. **Salin File Environment:**
+   ```bash
+   cp .env.example .env
+   ```
 
-```bash
-composer require laravel/boost --dev
+5. **Generate Application Key:**
+   ```bash
+   php artisan key:generate
+   ```
 
-php artisan boost:install
+6. **Buat Symbolic Link Storage:**
+   ```bash
+   php artisan storage:link
+   ```
+
+---
+
+## 4. Konfigurasi Database
+
+Buka file `.env` dan sesuaikan pengaturan koneksi database MySQL:
+
+```env
+DB_CONNECTION=mysql
+DB_HOST=127.0.0.1
+DB_PORT=3306
+DB_DATABASE=db_mbg
+DB_USERNAME=root
+DB_PASSWORD=
 ```
 
-Boost provides your agent 15+ tools and skills that help agents build Laravel applications while following best practices.
+---
 
-## Contributing
+## 5. Migration & Seeding Data Demo
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+Jalankan perintah berikut untuk membuat skema database dan mengisi data pengujian awal:
 
-## Code of Conduct
+```bash
+php artisan migrate:fresh --seed
+```
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+---
 
-## Security Vulnerabilities
+## 6. Akun Demo Setiap Role
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+| Peran (Role) | Email | Password | Hak Akses Utama |
+| :---                      | :---                   | :---       |                                                    :---                                                                      |
+| **Pelapor**               | `pelapor@mbg.test`     | `password` | Membuat laporan, unggah bukti, edit laporan status *diajukan*, memantau status laporan milik sendiri (AC-02, AC-04, AC-05).  |
+| **Pemantau Komunitas**    | `pemantau@mbg.test`    | `password` | Meninjau kelengkapan laporan, memberi catatan, mengubah status ke *ditinjau*, melihat rekap (AC-06, AC-07, AC-13).           |
+| **Koordinator Komunitas** | `koordinator@mbg.test` | `password` | Mencatat penerusan informasi ke pihak eksternal, mengubah status ke diteruskan/selesai, melihat rekap (AC-06, AC-07, AC-13). |
 
-## License
+---
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+## 7. Cara Menjalankan Aplikasi
+
+Jalankan server lokal Laravel:
+
+```bash
+php artisan serve
+```
+
+Akses aplikasi melalui browser di: `http://127.0.0.1:8000`
+
+---
+
+## 8. Ringkasan Fitur Teknis & Acceptance Criteria
+* **AC-01 Authentication:** Login & Logout berbasis Laravel Breeze dengan pembatasan hak akses berbasis Role.
+* **AC-02 Pelaporan Kejadian:** Pelapor dapat mendaftarkan laporan gangguan kesehatan MBG terkait sekolah & distribusi makanan.
+* **AC-03 Validation:** Validasi server-side pada input formulir pelaporan.
+* **AC-04 File Storage:** Upload bukti format JPG/PNG/PDF maks 2 MB dikelola via Laravel Storage.
+* **AC-05 Ownership & Privacy:** Pelapor hanya dapat melihat dan mengedit laporan miliknya sendiri (Policy restriction).
+* **AC-06 & AC-07 Authorization & Process:** Pemantau & Koordinator memproses status laporan sesuai hirarki alur.
+* **AC-08 Business Rules:** Menerapkan BR-01 (Kesesuaian distribusi & sekolah), BR-02 (Locking edit laporan), BR-03 (Hirarki transisi status).
+* **AC-09 Asynchronous Interaction:** Pilihan sekolah memuat dropdown distribusi makanan via JavaScript `fetch()`.
+* **AC-10 Search & Filter:** Filter berdasarkan sekolah, status, dan kata kunci pencarian.
+* **AC-11 Pagination:** Pagination 10 data dengan parameter filter aktif (`withQueryString()`).
+* **AC-12 Eloquent Observer:** Pencatatan otomatis log perubahan status laporan ke tabel `report_logs` via `ReportObserver`.
+* **AC-13 Rekap Sederhana:** Halaman `/recap` menyediakan 1 filter sekolah, 3 indikator ringkasan, dan 1 tabel rekapitulasi per sekolah.

@@ -23,8 +23,17 @@
                         </select>
                     </div>
                     <div class="flex gap-2">
-                        <button type="submit" class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">Terapkan Filter</button>
-                        <a href="{{ route('recap.index') }}" class="bg-gray-200 text-gray-700 px-4 py-2 rounded hover:bg-gray-300">Reset</a>
+                        <!-- Tombol Filter -->
+                        <button type="submit" 
+                                style="background-color: #2563eb; color: #ffffff; padding: 8px 18px; border-radius: 6px; font-weight: bold; border: none; cursor: pointer;">
+                            Filter
+                        </button>
+                        
+                        <!-- Tombol Reset -->
+                        <a href="{{ route('recap.index') }}" 
+                           style="background-color: #e5e7eb; color: #374151; padding: 8px 18px; border-radius: 6px; font-weight: bold; text-decoration: none; display: inline-block;">
+                            Reset
+                        </a>
                     </div>
                 </form>
             </div>
@@ -38,7 +47,7 @@
 
                 <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg p-6 border-l-4 border-yellow-500">
                     <div class="text-sm font-semibold text-gray-500">Sedang Diproses (Diajukan / Ditinjau)</div>
-                    <div class="text-3xl font-bold text-gray-800 mt-2">{{ $laporanDiproses }}</div>
+                    <div class="text-3xl font-bold text-gray-800 mt-2">{{ $laporanProses ?? $laporanDiproses ?? 0 }}</div>
                 </div>
 
                 <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg p-6 border-l-4 border-green-500">

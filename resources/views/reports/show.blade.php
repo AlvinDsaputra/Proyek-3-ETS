@@ -9,12 +9,12 @@
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 space-y-6">
             
             @if(session('success'))
-                <div class="p-4 bg-green-100 text-green-700 rounded-lg">
+                <div class="p-4 bg-green-100 border border-green-400 text-green-700 rounded-lg">
                     {{ session('success') }}
                 </div>
             @endif
 
-            <!-- Informational Card -->
+            <!-- Kartu Informasi Laporan -->
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg p-6">
                 <div class="flex justify-between items-center mb-4">
                     <h3 class="text-lg font-bold">Informasi Kejadian</h3>
@@ -31,7 +31,7 @@
                     <div><strong>Pelapor:</strong> {{ $report->user->name }}</div>
                     <div><strong>Sekolah:</strong> {{ $report->school->nama_sekolah }}</div>
                     <div><strong>Tanggal Kejadian:</strong> {{ $report->tanggal_kejadian }}</div>
-                    <div><strong>Menu Makanan:</strong> {{ $report->distribution->menu_makanan }} ({{ $report->distribution->tanggal_distribusi }})</div>
+                    <div><strong>Menu Makanan:</strong> {{ $report->distribution->menu_makanan ?? '-' }} ({{ $report->distribution->tanggal_distribusi ?? '-' }})</div>
                     <div><strong>Jumlah Terdampak:</strong> {{ $report->jumlah_terdampak }} siswa</div>
                     <div><strong>SPPG Penyedia:</strong> {{ $report->distribution->sppg_penyedia ?? '-' }}</div>
                 </div>
@@ -71,7 +71,11 @@
                                 <option value="ditinjau" {{ $report->status === 'ditinjau' ? 'selected' : '' }}>Tandai Ditinjau</option>
                             </select>
                         </div>
-                        <button type="submit" class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">Simpan Peninjauan</button>
+                        <!-- Tombol Submit Biru -->
+                        <button type="submit" 
+                                style="background-color: #2563eb; color: #ffffff; padding: 10px 20px; border-radius: 6px; font-weight: bold; border: none; cursor: pointer;">
+                            Simpan Peninjauan
+                        </button>
                     </form>
                 </div>
             @endcan
@@ -93,7 +97,11 @@
                                 <option value="selesai" {{ $report->status === 'selesai' ? 'selected' : '' }}>Tandai Selesai</option>
                             </select>
                         </div>
-                        <button type="submit" class="bg-purple-600 text-white px-4 py-2 rounded hover:bg-purple-700">Catat Penerusan Informasi</button>
+                        <!-- Tombol Submit Ungu -->
+                        <button type="submit" 
+                                style="background-color: #9333ea; color: #ffffff; padding: 10px 20px; border-radius: 6px; font-weight: bold; border: none; cursor: pointer;">
+                            Catat Penerusan Informasi
+                        </button>
                     </form>
                 </div>
             @endcan
@@ -104,7 +112,7 @@
                 <ul class="divide-y divide-gray-200">
                     @forelse($report->logs as $log)
                         <li class="py-3 text-sm">
-                            Status berubah dari <span class="font-bold text-gray-700">{{ $log->status_lama }}</span> menjadi <span class="font-bold text-blue-600">{{ $log->status_baru }}</span>
+                            Status berubah dari <span class="font-bold text-gray-700">{{ $log->status_lama ?? '-' }}</span> menjadi <span class="font-bold text-blue-600">{{ $log->status_baru }}</span>
                             oleh <span class="font-semibold">{{ $log->user->name ?? 'Sistem' }}</span> pada <span class="text-gray-500">{{ $log->created_at->format('d M Y, H:i') }}</span>
                         </li>
                     @empty

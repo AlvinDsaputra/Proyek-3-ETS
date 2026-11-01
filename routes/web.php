@@ -3,18 +3,23 @@
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\DistributionController;
+use App\Http\Controllers\ReportController;
 
 Route::get('/', function () {
-    return view('welcome');
+    return redirect()->route('login');
 });
 
 Route::get('/dashboard', function () {
-    return view('dashboard');
+    return redirect()->route('reports.index');
 })->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::middleware('auth')->group(function () {
     Route::get('/api/schools/{school}/distributions', [DistributionController::class, 'getBySchool'])
         ->name('api.distributions.by-school');
+
+    Route::resource('reports', ReportController::class)->except(['edit', 'update', 'destroy']);
+    Route::post('/reports/{report}/review', [ReportController::class, 'review'])->name('reports.review');
+    Route::post('/reports/{report}/forward', [ReportController::class, 'forward'])->name('reports.forward');    
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');

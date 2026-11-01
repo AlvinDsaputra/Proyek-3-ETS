@@ -4,8 +4,9 @@
             <h2 class="font-semibold text-xl text-gray-800 leading-tight">
                 {{ __('Daftar Pelaporan Keamanan Makanan MBG') }}
             </h2>
-            @if(auth()->user()->role === 'pelapor')
-                <a href="{{ route('reports.create') }}" class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">
+            @if(strtolower(trim(auth()->user()->role ?? '')) === 'pelapor')
+                <a href="{{ route('reports.create') }}" 
+                style="background-color: #2563eb; color: #ffffff; padding: 8px 16px; border-radius: 6px; font-weight: bold; text-decoration: none; display: inline-block;">
                     + Buat Laporan Baru
                 </a>
             @endif

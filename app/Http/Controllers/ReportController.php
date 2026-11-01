@@ -23,36 +23,38 @@ class ReportController extends Controller
     // Index dengan Ownership Check, Search, Filter, & Pagination
     public function index(Request $request)
     {
-        $user = auth()->user();$query = Report::with(['school', 'distribution', 'user']);
+        $user = auth()->user();
+        $query = Report::with(['school', 'distribution', 'user']);
 
-        // Pelapor hanya melihat laporan miliknya sendiri
-        if ($user->role === 'pelapor') {
-            $query->where('user_id',$user->id);
+        // Pelapor hanya melihat laporan miliknya sendiri 
+        if (strtolower(trim($user->role)) === 'pelapor') {
+            $query->where('user_id', $user->id);
         }
 
         // Filter Sekolah 
         if ($request->filled('school_id')) {
-            $query->where('school_id',$request->school_id);
+            $query->where('school_id', $request->school_id);
         }
 
         // Filter Status 
         if ($request->filled('status')) {
-            $query->where('status',$request->status);
+            $query->where('status', $request->status);
         }
 
-        // Search Kata Kunci 
+        // Search Kata Kunci (Deskripsi Kejadian ATAU Nama Sekolah)
         if ($request->filled('search')) {
-            $search =$request->search;
+            $search = $request->search;
             $query->where(function ($q) use ($search) {
-                $q->where('deskripsi_kejadian', 'like', "\%{$search}%")
-                  ->orWhereHas('school', function ($sq) use ($search) {
-                      $sq->where('nama_sekolah', 'like', "\%{$search}%");
-                  });
+                $q->where('deskripsi_kejadian', 'like', '%' . $search . '%')
+                ->orWhereHas('school', function ($sq) use ($search) {
+                    $sq->where('nama_sekolah', 'like', '%' . $search . '%');
+                });
             });
         }
 
         // Pagination 10 data & tetap mempertahankan parameter filter saat ganti halaman
-        $reports = $query->orderBy('created_at', 'desc')->paginate(10)->withQueryString();$schools = School::all();
+        $reports = $query->orderBy('created_at', 'desc')->paginate(10)->withQueryString();
+        $schools = \App\Models\School::all();
 
         return view('reports.index', compact('reports', 'schools'));
     }

@@ -3,6 +3,7 @@
 namespace App\Observers;
 
 use App\Models\Report;
+use App\Models\ReportLog;
 
 class ReportObserver
 {
@@ -11,15 +12,12 @@ class ReportObserver
      */
     public function created(Report $report): void
     {
-        // Catat log hanya jika kolom 'status' mengalami perubahan
-        if ($report->isDirty('status')) {
-            ReportLog::create([
-                'report_id' => $report->id,
-                'user_id' => auth()->id(),
-                'status_lama' => $report->getOriginal('status'),
-                'status_baru' => $report->status,
-            ]);
-        }
+        ReportLog::create([
+            'report_id'   => $report->id,
+            'user_id'     => auth()->id(),
+            'status_lama' => '-', 
+            'status_baru' => $report->status ?? 'diajukan',
+        ]);
     }
 
     /**
@@ -27,30 +25,13 @@ class ReportObserver
      */
     public function updated(Report $report): void
     {
-        //
-    }
-
-    /**
-     * Handle the Report "deleted" event.
-     */
-    public function deleted(Report $report): void
-    {
-        //
-    }
-
-    /**
-     * Handle the Report "restored" event.
-     */
-    public function restored(Report $report): void
-    {
-        //
-    }
-
-    /**
-     * Handle the Report "force deleted" event.
-     */
-    public function forceDeleted(Report $report): void
-    {
-        //
+        if ($report->isDirty('status')) {
+            ReportLog::create([
+                'report_id'   => $report->id,
+                'user_id'     => auth()->id(),
+                'status_lama' => $report->getOriginal('status') ?? '-',
+                'status_baru' => $report->status,
+            ]);
+        }
     }
 }
